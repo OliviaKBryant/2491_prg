@@ -27,17 +27,24 @@ gapminder_example <-
   theme(legend.position = 'bottom',
         legend.box      = 'vertical',
         axis.text.x = element_text(angle = 45, hjust = 1))
+gapminder_example
 
 if (!dir.exists('./results')){dir.create('./results')}
 
 ggsave(filename = "results/gapminder_example.pdf",
        plot = gapminder_example, width = 8, height = 4, 
-       units = "in", device = cairo_pdf)
+       units = "in")
 
 ggsave(filename = "results/gapminder_example.png",
        plot = gapminder_example, width = 8, height = 4, 
        units = "in", dpi = 150)
 
+# good: colours do contrast with the background, title is present, splitting by continent is quite good
+
+# bad: we don't need population, colours not needed, years are not represented/no concept of time, scale
+# is different for every continent, axes poorly labelled, doesn't make it clear that it's per capita,
+# can't differentiate between countries, background is too dark and grid lines are too prominent, could
+# change the scale to per 100/per million or have them either all use e+ whatever or none of them.
 
 # Activity 2
 
