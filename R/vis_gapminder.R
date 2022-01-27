@@ -9,7 +9,7 @@ if (require(gapminder)){
     data(gapminder)
   } else {
     gapminder <- read_csv("../data/gapminder.csv")
-}
+  }
 
 gapminder_example <- 
   ggplot(data = gapminder,
@@ -51,6 +51,28 @@ ggsave(filename = "results/gapminder_example.png",
 # Activity 2a
 
 # Build a graph which your group believes better shows the relationship between life expectancy and GDP
+library(magrittr)
+gapminder %<>% filter(year>2000)
+
+gapminder_better <- 
+  ggplot(data = gapminder,
+         aes(x = gdpPercap/1000, y = lifeExp)) +
+  geom_path(aes(group = country), color = "red",
+            size = 0.8,
+            arrow = arrow(type = "open", angle = 30, 
+                          length = unit(0.05, "inches"))) +
+  # geom_point(aes(color = continent, size = pop), shape = 1) +
+  # scale_color_brewer(palette = "") +
+  scale_x_log10(labels = ~sprintf("%g",.)) +
+  annotation_logticks(sides = 'b') +
+  facet_wrap( ~ continent, nrow = 1) +
+  theme_bw() +
+  labs(x = "GDP per Capita ($1000s)", y = "Life Expectancy (LE)",
+       title = "GDP and Life Expectancy in 2002 and 2007") +
+  theme(legend.position = 'bottom',
+        legend.box      = 'vertical')
+gapminder_better
+
 
 
 # Activity 2b
