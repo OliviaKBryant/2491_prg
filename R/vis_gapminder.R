@@ -9,7 +9,7 @@ if (require(gapminder)){
     data(gapminder)
   } else {
     gapminder <- read_csv("../data/gapminder.csv")
-  }
+}
 
 gapminder_example <- 
   ggplot(data = gapminder,
@@ -76,6 +76,25 @@ gapminder_better
 
 
 # Activity 2b
+library(plyr)
+library(ggplot2)
+library(scales)
+
+library(jpeg)
+library(ggpubr)
+library(ggthemes)
+gapminder$year.roman <- as.roman(gapminder$year)
+gapminder$lifeExp.round <- round_any(gapminder$lifeExp, 10)
+
+gapminder$year.roman <- as.roman(gapminder$year)
+
+ggplot(data = gapminder,
+       aes(x = year.roman, y = lifeExp, color=gdpPercap)) +
+  geom_path(aes(group = country))+
+  theme(text=element_text(family="Comic Sans MS"))+
+  geom_point() +
+  scale_colour_gradientn(colors=rainbow(7)) 
+  
 
 # Make a plot which is as bad as possible while still attempting to honestly show the information
 # (i.e. don't add things to the plot which can't be derived from the variables in the plot)
